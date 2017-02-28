@@ -20,23 +20,27 @@
 class Text_Wiki_Parse_Image extends Text_Wiki_Parse {
 
     /**
-     *
      * Constructor.  Overrides the Text_Wiki_Parse constructor so that we
      * can set the $regex property dynamically (we need to include the
      * Text_Wiki $delim character).
      *
-     * @param object &$obj The calling "parent" Text_Wiki object.
-     *
-     * @param string $name The token name to use for this rule.
-     *
+     * @param object $obj The calling "parent" Text_Wiki object.
      */
-
-    function Text_Wiki_Parse_Image(&$obj)
+    function __construct($obj)
     {
-        parent::Text_Wiki_Parse($obj);
+        parent::__construct($obj);
         $this->regex = '/{{([^' . $this->wiki->delim . ']*)(\|([^' . $this->wiki->delim . ']*))?}}/U';
     }
 
+    /**
+     * PHP4 constructor for backwards compatibility with old code
+     *
+     * @param object $obj The calling "parent" Text_Wiki object.
+     */
+    function Text_Wiki_Parse_Image($obj)
+    {
+        self::__construct($obj);
+    }
 
     /**
      *

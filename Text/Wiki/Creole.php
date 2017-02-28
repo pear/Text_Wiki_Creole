@@ -91,16 +91,23 @@ class Text_Wiki_Creole extends Text_Wiki {
     /**
      * Constructor: just adds the path to Creole rules
      *
-     * @access public
      * @param array $rules The set of rules to load for this object.
      */
-
-    function Text_Wiki_Creole($rules = null) {
-        parent::Text_Wiki($rules);
+    public function __construct($rules = null) {
+        parent::__construct($rules);
         $this->addPath('parse', $this->fixPath(dirname(__FILE__)).'Parse/Creole');
         $this->renderingType = 'char';
         $this->setRenderConf('xhtml', 'center', 'css', 'center');
         $this->setRenderConf('xhtml', 'url', 'target', null);
+    }
+
+    /**
+     * PHP4 constructor for backwards compatibility with old code
+     *
+     * @param array $rules The set of rules to load for this object.
+     */
+    function Text_Wiki_Creole($rules = null) {
+        self::__construct($rules);
     }
 
     function checkInnerTags(&$text) {

@@ -93,19 +93,16 @@ class Text_Wiki_Parse_Wikilink extends Text_Wiki_Parse {
 
     var $regex = '/(?<!\[)\[\[(?!\[) *(:?)((?:[^:\n]+:)+)?([^:\n]+)(#(?:[^\n]*))?(?: *\| *(((?R))|[^\n]*))? *]]/msU';
 
-     /**
+    /**
      * Constructor.
      * We override the constructor to get Image and Interwiki config
      *
-     * @param object &$obj the base conversion handler
-     * @return The parser object
-     * @access public
+     * @param object $obj the base conversion handler
      */
-
-    function Text_Wiki_Parse_Wikilink(&$obj)
+    public function __construct($obj)
     {
         $default = $this->conf;
-        parent::Text_Wiki_Parse($obj);
+        parent::__construct($obj);
 
         // override config options for image if specified
         if (in_array('Image', $this->wiki->disable)) {
@@ -143,6 +140,16 @@ class Text_Wiki_Parse_Wikilink extends Text_Wiki_Parse {
            '#(?:' . (is_array($schemes) ? implode('|', $schemes) : $schemes) . ')://'
            . $this->getConf('host_regexp', $default['host_regexp'])
            . $this->getConf('path_regexp', $default['path_regexp']) .'#'); */
+    }
+
+    /**
+     * PHP4 constructor for backwards compatibility with old code
+     *
+     * @param object $obj the base conversion handler
+     */
+    public function Text_Wiki_Parse_Wikilink($obj)
+    {
+        self::__construct($obj);
     }
 
     /**

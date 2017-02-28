@@ -27,21 +27,26 @@
 class Text_Wiki_Parse_Url extends Text_Wiki_Parse {
 
     /**
-     *
      * Constructor.  Overrides the Text_Wiki_Parse constructor so that we
      * can set the $regex property dynamically (we need to include the
      * Text_Wiki $delim character).
      *
-     * @param object &$obj The calling "parent" Text_Wiki object.
-     *
-     * @param string $name The token name to use for this rule.
-     *
+     * @param object $obj The calling "parent" Text_Wiki object.
      */
-
-    function Text_Wiki_Parse_Url(&$obj)
+    function __construct($obj)
     {
-        parent::Text_Wiki_Parse($obj);
+        parent::__construct($obj);
         $this->regex = '/((?:\[\[ *((?:\w+:\/\/|mailto:|\/)[^\|\]\n ]*)( *\| *([^\]\n]*))? *\]\])|((?<=[^\~\w])(https?:\/\/|ftps?:\/\/|mailto:)[^\'\"\n ' . $this->wiki->delim . ']*[A-Za-z0-9\/\?\=\&\~\_#]))/';
+    }
+
+    /**
+     * PHP4 constructor for backwards compatibility with old code
+     *
+     * @param object $obj  The calling "parent" Text_Wiki object.
+     */
+    function Text_Wiki_Parse_Url($obj)
+    {
+        self::__construct($obj);
     }
 
 
